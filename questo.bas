@@ -1,12 +1,27 @@
-REM QHOSTNAME$ = ARGV$(1)
-
-REM get 1st uupath
-QHOSTNAME$ = "psueea"
-TH_EXEC("uupath " + QHOSTNAME$), PATHS$
-PATH$ = TH_RE$(PATHS$, "[^\n]+", 1)
-
-REM split uupath into array
-PATTERN$ = "[^\!]+"
-FOR I = 1 TO TH_RE(PATH$, PATTERN$, 1)
-TARGETPATH$(I) = TH_RE$(PATH$, PATTERN$, I)
-NEXT I
+10 REM uupath array
+20 INPUT "HOSTNAME: ", QHOSTNAME$
+30 INPUT "FILENAME: ", FILENAME$
+40 TH_EXEC("uupath " + QHOSTNAME$), PATHS$
+50 PATH$ = TH_RE$(PATHS$, "[^\n]+", 1)
+60 PATTERN$ = "[^\!]+"
+70 FOR I = 0 TO TH_RE(PATH$, PATTERN$, 1)
+80 TARGETPATH$(I) = TH_RE$(PATH$, PATTERN$, I)
+90 LEN_TARGETPATH% = I
+100 NEXT I
+110 REM porthack
+120 FOR J = 2 TO LEN_TARGETPATH%
+130 IF TH_HASLOGIN(HOSTS$(J)) = 1 THEN GOTO 200
+140 TH_EXEC("porthack " + TARGETPATH$(J))
+150 TH_EXEC("ftp " + TARGETPATH$(J))
+160 TH_EXEC("put porthack.exe")
+170 TH_EXEC("put atmt.bas")
+180 TH_EXEC("quit")
+190 TH_EXEC("rlogin " + TARGETPATH$(J))
+200 NEXT J
+210 TH_EXEC("cat " + FILENAME$), CONTENTS$
+220 QCODE$ = TH_RE$(CONTENTS$, "dx\s+(\d+)\s+(\d+)")
+230 TH_EXEC("call -151")
+240 TH_EXEC("2425152g")
+250 TH_EXEC(QCODE$)
+260 TH_EXEC("quit")
+270 TH_EXEC("r")
