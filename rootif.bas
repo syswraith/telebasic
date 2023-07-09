@@ -13,4 +13,9 @@ TH_EXEC("ps"), ps$
 IF TH_RE(ps$, "\s3\s", 1) = 0 THEN NROOTED$ = NROOTED$ + HOSTS$(K) + " is not rooted" + LIN(1)
 TH_EXEC("quit")
 NEXT K
-PRINT NROOTED$
+OPEN "root.txt", AS #1
+90 IF EOF(1) THEN GOTO 100
+INPUT# 1, DUMP$
+GOTO 90
+100 PRINT# 1, NROOTED$	
+CLOSE #1
