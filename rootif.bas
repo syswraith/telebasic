@@ -10,7 +10,7 @@ REM check
 FOR K = 1 TO LEN_HOSTNAMES%
 TH_EXEC("rlogin " + HOSTS$(K))
 TH_EXEC("ps"), ps$
-IF TH_RE(ps$, "\s3\s", 1) = 0 THEN NROOTED$ = NROOTED$ + HOSTS$(K) + " is not rooted" + LIN(1)
+IF TH_RE(ps$, "\s3\s", 1) = 0 THEN TH_EXEC("hostname"), NAMEKIT$ : NROOTED$ = NROOTED$ + NAMEKIT$
 TH_EXEC("quit")
 NEXT K
 OPEN "root.txt", AS #1
