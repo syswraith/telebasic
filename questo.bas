@@ -1,6 +1,6 @@
 1 REM QUEST
 2 TH_EXEC("quest"), out$
-3 FIRST_EXTRACT$ = TH_RE$(out$, "Hack your way to the host:\s+([A-Z \d]+)", 1) : QHOSTNAME$ = TH_RE$(FIRST_EXTRACT$, "\s[A-Z \d]+", 1)
+3 FIRST_EXTRACT$ = TH_RE$(out$, "Hack your way to the host:\s[A-Z,\-\d]+", 1) : QHOSTNAME$ = TH_RE$(FIRST_EXTRACT$, "\s[A-Z,\-\d]+", 1)
 4 SECOND_EXTRACT$ = TH_RE$(out$ , "The host contains this file:\s+(\w+).SYS", 1) : FILENAME$ = TH_RE$(SECOND_EXTRACT$, "\s+(\w+).SYS", 1)
 5 REM uupath array
 6 TH_EXEC("uupath " + QHOSTNAME$), PATHS$
