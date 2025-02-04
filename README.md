@@ -11,7 +11,7 @@ Programs written in telebasic for telehack.com
 
 ```
 veritas : 513
-mimsy : 318
+mimsy : 388
 oracle : 93
 rutgers : 79
 force10 : 79
